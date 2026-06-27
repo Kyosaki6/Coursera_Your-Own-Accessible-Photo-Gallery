@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Interactive Photo Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            background: linear-gradient(145deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 0 0 8px;
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.95rem;
+            font-weight: 400;
+            margin: 0 0 40px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 28px;
+            max-width: 1100px;
+            width: 100%;
+            padding: 0;
+        }
+
+        figure {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            width: 300px;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        box-shadow 0.4s ease,
+                        opacity 0.4s ease;
+            cursor: pointer;
+            outline: none;
+        }
+
+        figure.dimmed {
+            opacity: 0.35;
+            transform: scale(0.96);
+            filter: grayscale(0.6);
+        }
+
+        figure.highlight {
+            transform: scale(1.05) translateY(-6px);
+            box-shadow: 0 12px 48px rgba(247, 151, 30, 0.25),
+                        0 0 0 3px rgba(247, 151, 30, 0.6);
+            opacity: 1;
+            filter: grayscale(0);
+        }
+
+        figure img {
+            display: block;
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            pointer-events: none;
+        }
+
+        figure.highlight img {
+            transform: scale(1.08);
+        }
+
+        .fig-body {
+            padding: 14px 16px 16px;
+            text-align: left;
+        }
+
+        figcaption {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.3px;
+        }
+
+        figcaption small {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.4);
+            margin-top: 3px;
+            letter-spacing: 0.5px;
+        }
+
+        .counter {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            pointer-events: none;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 20px 12px; }
+            h1 { font-size: 2rem; }
+            .gallery { gap: 20px; }
+            figure { width: 100%; max-width: 380px; }
+            figure img { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Interactive Photo Gallery</h1>
+    <p class="subtitle">Hover or focus &mdash; feel the glow</p>
+
+    <div class="gallery" id="gallery">
+        <figure>
+            <img src="https://picsum.photos/id/1015/600/400" alt="Mountain stream with rocks and trees">
+            <span class="counter">01</span>
+            <div class="fig-body">
+                <figcaption>Mountain Stream <small>Alpine escape</small></figcaption>
+            </div>
+        </figure>
+        <figure>
+            <img src="https://picsum.photos/id/1018/600/400" alt="Misty mountain peak at sunrise">
+            <span class="counter">02</span>
+            <div class="fig-body">
+                <figcaption>Misty Peak <small>Dawn silence</small></figcaption>
+            </div>
+        </figure>
+        <figure>
+            <img src="https://picsum.photos/id/1035/600/400" alt="Black and white photo of a lighthouse on a cliff">
+            <span class="counter">03</span>
+            <div class="fig-body">
+                <figcaption>Lighthouse <small>Coastal sentinel</small></figcaption>
+            </div>
+        </figure>
+        <figure>
+            <img src="https://picsum.photos/id/1039/600/400" alt="Sunset over calm ocean waters with rocks">
+            <span class="counter">04</span>
+            <div class="fig-body">
+                <figcaption>Ocean Sunset <small>Golden hour</small></figcaption>
+            </div>
+        </figure>
+        <figure>
+            <img src="https://picsum.photos/id/1043/600/400" alt="Water reflection of a boat in a calm lake">
+            <span class="counter">05</span>
+            <div class="fig-body">
+                <figcaption>Lake Reflection <small>Still waters</small></figcaption>
+            </div>
+        </figure>
+        <figure>
+            <img src="https://picsum.photos/id/1044/600/400" alt="A lush green forest with sunlight filtering through trees">
+            <span class="counter">06</span>
+            <div class="fig-body">
+                <figcaption>Forest Light <small>Canopy dreams</small></figcaption>
+            </div>
+        </figure>
+    </div>
+
+    <script>
+        function setUpGallery() {
+            console.log("Page loaded – setting up gallery");
+
+            var figures = document.querySelectorAll("#gallery figure");
+
+            for (var i = 0; i < figures.length; i++) {
+                figures[i].setAttribute("tabindex", "0");
+            }
+
+            for (var i = 0; i < figures.length; i++) {
+                (function(fig) {
+                    fig.addEventListener("mouseover", function() {
+                        console.log("mouseover triggered on", fig.querySelector("figcaption").textContent.trim());
+                        fig.classList.remove("dimmed");
+                        fig.classList.add("highlight");
+                    });
+
+                    fig.addEventListener("mouseleave", function() {
+                        console.log("mouseleave triggered on", fig.querySelector("figcaption").textContent.trim());
+                        fig.classList.remove("highlight");
+                        fig.classList.add("dimmed");
+                    });
+
+                    fig.addEventListener("focus", function() {
+                        console.log("focus triggered on", fig.querySelector("figcaption").textContent.trim());
+                        fig.classList.remove("dimmed");
+                        fig.classList.add("highlight");
+                    });
+
+                    fig.addEventListener("blur", function() {
+                        console.log("blur triggered on", fig.querySelector("figcaption").textContent.trim());
+                        fig.classList.remove("highlight");
+                        fig.classList.add("dimmed");
+                    });
+                })(figures[i]);
+            }
+        }
+
+        window.addEventListener("load", setUpGallery);
+    </script>
+
+</body>
+</html>
